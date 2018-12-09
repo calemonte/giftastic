@@ -21,7 +21,7 @@
         <div class="jumbotron jumbotron-fluid bg-light text-black text-center">
             <div class="container">
                 <h1 class="display-4">Movie Gif-o-Matic</h1>
-                <p class="lead">Click the buttons to see gifs from your favorite movies. Add your own using the text box to the right (and save some to your favorites)!</p>
+                <h3 class="lead">Click a button, get some movie-inspired gifs!</h3>
             </div>
         </div>
 
@@ -29,16 +29,7 @@
         <div class="container">
             <div class="row">
                 <!-- Button container -->
-                <div class="col-12" id="movie-buttons">
-                    <!-- <button type="button" class="btn btn-dark m-1">Movie Tile </button>
-                    <button type="button" class="btn btn-dark m-1">Movie Movie Movie</button>
-                    <button type="button" class="btn btn-dark m-1">Movie Movie Movie</button>
-                    <button type="button" class="btn btn-dark m-1">Movie Movie Movie</button>
-                    <button type="button" class="btn btn-dark m-1">Movie Movie Movie</button>
-                    <button type="button" class="btn btn-dark m-1">Movie Movie Movie</button>
-                    <button type="button" class="btn btn-dark m-1">Movie Movie Movie</button>
-                    <button type="button" class="btn btn-dark m-1">Movie Movie Movie</button>
-                    <button type="button" class="btn btn-dark m-1">Movie Movie Movie</button> -->
+                <div class="col-lg-12 text-center" id="movie-buttons">
                 </div>
             </div>
 
@@ -46,80 +37,30 @@
             <div class="row mt-3">
 
                 <!-- GIFs appended here -->
-                <div class="col-9" id="gif-target">
-                    <!-- <figure class="figure m-3">
-                        <a href="#">
-                            <span class="badge badge-pill badge-danger figure-badge p-2">+ Favorites</span>
-                        </a>
-
-                        <img src="https://media.giphy.com/media/oeGgcmHVHLVCg/giphy.gif" class="figure-img img-fluid rounded"/>
-                        <figcaption class="figure-caption text-center">Rating: PG</figcaption>
-
-                    </figure>
-
-                    <figure class="figure m-3">
-                        
-                        <a href="#">
-                            <span class="badge badge-pill badge-danger figure-badge p-2">+ Favorites</span>
-                        </a>
-
-                        <img src="https://media.giphy.com/media/oeGgcmHVHLVCg/giphy.gif" class="figure-img img-fluid rounded"/>
-                        <figcaption class="figure-caption text-center">Rating: PG</figcaption>
-
-                    </figure>
-
-                    <figure class="figure m-3">
-                           
-                            <a href="#">
-                                <span class="badge badge-pill badge-danger figure-badge p-2">+ Favorites</span>
-                            </a>
-    
-                            <img src="https://media.giphy.com/media/oeGgcmHVHLVCg/giphy.gif" class="figure-img img-fluid rounded"/>
-                            <figcaption class="figure-caption text-center">Rating: PG</figcaption>
-    
-                     </figure>
-
-                     <figure class="figure m-3">
-                            
-                            <a href="#">
-                                <span class="badge badge-pill badge-danger figure-badge p-2">+ Favorites</span>
-                            </a>
-    
-                            <img src="https://media.giphy.com/media/oeGgcmHVHLVCg/giphy.gif" class="figure-img img-fluid rounded"/>
-                            <figcaption class="figure-caption text-center">Rating: PG</figcaption>
-    
-                     </figure> -->
-
+                <div class="col-lg-9" id="gif-target">
                 </div>
 
-                <div class="col-3">
+                <div class="col-lg-3">
                     <!-- Submit your movie titles -->
                     <div class="row">
                         <form>
-                            <label for="submit-movie"><h2>Submit a Movie</h2></label>
+                            <label for="submit-movie"><h3>Add a Movie Button</h3></label>
                             <input type="text" class="form-control" id="submit-movie" placeholder="Enter movie title">
-                            <button type="submit" class="btn btn-dark mt-2" id="submit-movie-button">Submit</button>
+                            <button type="submit" class="btn btn-dark mt-2" id="submit-movie-button">Add</button>
                         </form>
                     </div>
 
                     <!-- Display OMDB information -->
-                    <div class="row mt-3 border-top">
-                        <h2 class="pt-1">Movie Specs</h2>
-                        <ul>
-                            <li>Date Released:</li>
-                            <li>Synopsis</li>
-                            <li>SMALL IMAGE</li>
-                        </ul>
+                    <div class="row mt-3 border-top" id="omdb-display">
+                        <h3 class="pt-1" id="movie-title"></h3>
+                        <p><b>Date Released</b>: <span id="date-released"></span></p>
+                        <p><b>Director</b>: <span id="director"></span></p>
+                        <p><b>Synopsis</b>: <span id="synopsis"></span></p>
                     </div>
 
                     <!-- Favorites list -->
-                    <div class="row mt-3 border-top">
+                    <div class="row mt-3 border-top" id="your-favorites">
                         <h2 class="pt-1">Your Favorites</h2>
-                        <ul>
-                            <li>Favorite 1</li>
-                            <li>Favorite 1</li>
-                            <li>Favorite 3</li>
-                        </ul>
                     </div>
                     
                 </div>
