@@ -12,7 +12,12 @@ var movies = [
     "Princess Mononoke",
     "She's All That",
     "Dirty Dancing",
-    "Dr. Strangelove"
+    "Dr. Strangelove",
+    "Django Unchained",
+    "IT",
+    "Sunset Boulevard",
+    "Grease",
+    "The Good, The Bad, and The Ugly"
 ];
 
 // Function for displaying movie buttons.
@@ -46,7 +51,8 @@ function giphyQuery() {
 
     var $current = $(this).attr("data-name");
     var baseURL = "https://api.giphy.com/v1/gifs/search";
-    var URL = baseURL + "?api_key=" + returnKey() + "&q=" + $current + "&limit=10";
+    var offset = 0;
+    var URL = baseURL + "?api_key=" + returnKey() + "&q=" + $current + "&limit=10" + "&offset=" + offset;
     var $target = $("#gif-target");
 
     // Return API key (not sure if this is more secure).
@@ -84,20 +90,16 @@ function giphyQuery() {
 
             $img.addClass("gif-still");
 
-            var $figCaption = $("<figcaption class='figure-caption text-center'>Rating: " + gifs[i].rating + "</figcaption>");
+            var $figCaption = $("<figcaption class='figure-caption text-center'> Rating: " + gifs[i].rating + "  |  " + "<a target='_blank' href='" + gifs[i].bitly_gif_url + "' download> View on GIPHY </a>" + "</figcaption>");
 
             var $gif = $("<figure class='figure m-3' />");
 
             $gif.append($badge, $img, $figCaption);
 
             $target.prepend($gif);
+
+            console.log(response);
         }
-
-        // $target.append("<button class='btn btn-dark mb-3 mt-3' id='load-more'>Load More!</button>");
-
-        // $("#load-more").on("click", function() {
-
-        // });
 
     });
 
@@ -128,7 +130,7 @@ function queryOMDB() {
         $("#director").text(response.Director);
         $("#synopsis").text(response.Plot);
         $("#omdb-display").append("<img src='" + response.Poster + "'/img>");
-        
+
     });
 
 };
@@ -143,16 +145,14 @@ $("#submit-movie-button").on("click", function(e) {
     if ($value) {
         movies.push($value);
         displayButtons();
+        $("#submit-movie").val("");
     } else {
         alert("You forgot to add a movie!");
     } 
 
 });
 
-/* 
-    When a movie button is clicked, query GIPHY and OMDB database 
-    and then display corresponding set of gifs and movie specs.
-*/
+// When a movie button is clicked, query GIPHY and OMDB database and  display corresponding set of gifs and movie specs.
 $(document).on("click", ".movie", giphyQuery)
            .on("click", ".movie", queryOMDB)
            .on("click", ".movie", showExtraContent);
@@ -178,6 +178,12 @@ $(document).on("click", ".figure-badge", function() {
 
     $("#your-favorites").append("<img class='m-2' src='" + $(this).attr("data-animate-small") + "'/>");
 });
+
+// $(document).on("click", ".a-download", function(e){
+//     e.preventDefault();
+//     console.log("Yup");
+//     window.location.href = $(this).attr("a-download");
+// });
 
 // Display initial set of gif buttons.
 displayButtons();
