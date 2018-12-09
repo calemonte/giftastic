@@ -1,0 +1,13 @@
+h1 {
+    font-family: 'Monoton', cursive;
+}
+
+.figure {
+    position: relative;
+}
+
+.figure-badge {
+    position: absolute;
+    top: 5px;
+    right: -20px;
+}
