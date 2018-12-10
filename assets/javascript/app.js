@@ -177,7 +177,7 @@ $(document).on("click", ".figure-badge", function() {
     var $smallStill = $(this).attr("data-still-small");
     var $smallAnimate = $(this).attr("data-animate-small");
 
-    $(this).text("Added!");
+    $(this).text("Added!").css("backgroundColor", "goldenrod");
 
     $("#your-favorites").show("medium");
 
