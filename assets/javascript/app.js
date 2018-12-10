@@ -32,21 +32,24 @@ function displayButtons() {
 
 };
 
+// Function to hide OMDB output and your favorites list.
 function hideExtraContent() {
     $("#omdb-display").hide();
     $("#your-favorites").hide();
 };
 
+// Function to show OMDB output and your favorites list.
 function showExtraContent() {
     $("#omdb-display > img").remove();
     $("#omdb-display").show("medium");
 };
 
+// Function for clearing gifs from the target area.
 function clearGifs() {
     $("#gif-target").empty();
 };
 
-// Function for querying the GIPHY API.
+// Function for querying the GIPHY API and appending responses to the DOM.
 function giphyQuery() {
 
     var $current = $(this).attr("data-name");
@@ -72,36 +75,35 @@ function giphyQuery() {
 
         clearGifs();
 
+        // Cache response base path.
         var gifs = response.data;
 
+        // Loop through response data and append gifs, badges, ratings, and links to GIPHY.
         for (var i = 0; i < gifs.length; i++) {
 
-            // Hide this bit if you want the special effects (.hide()).
+            // Create and hide badge for hover effect.
             var $badge = $("<span class='badge badge-pill badge-danger figure-badge p-2'>+ Favorites</span>").hide();
-
             $badge.attr({
                 "data-still-small": gifs[i].images.fixed_height_small_still.url,
                 "data-animate-small": gifs[i].images.fixed_height_small.url
             });
 
+            // Create gif image, add data attributes, add gif-still class for targeting later.
             var $img = $("<img class='figure-img img-fluid rounded' src='" + gifs[i].images.fixed_height_still.url + "'/>");
-
             $img.attr({
                 "data-animate": gifs[i].images.fixed_height.url,
                 "data-still": gifs[i].images.fixed_height_still.url,
             });
-
             $img.addClass("gif-still");
 
+            // Create caption with GIPHY rating and link to the original on GIPHY.com.
             var $figCaption = $("<figcaption class='figure-caption text-center'> Rating: " + gifs[i].rating + "  |  " + "<a target='_blank' href='" + gifs[i].bitly_gif_url + "' download> View on GIPHY </a>" + "</figcaption>");
 
+            // Create figure and then append gif, badge, and caption to it.
             var $gif = $("<figure class='figure m-3' />");
-
             $gif.append($badge, $img, $figCaption);
-
             $target.prepend($gif);
 
-            console.log(response);
         }
 
     });
@@ -111,9 +113,12 @@ function giphyQuery() {
 // Query the OMDB database and add data to page.
 function queryOMDB() {
 
+    // Construct the URL.
     var $current = $(this).attr("data-name");
     var baseURL = "https://www.omdbapi.com/?t=";
     var URL = baseURL + $current + "&y=&plot=short&apikey=" + returnKey();
+
+    // Cache reference to OMDB display area.
     var $target = $("#omdb-display");
 
     // Return API key (not sure if this is more secure).
@@ -128,6 +133,7 @@ function queryOMDB() {
         method: "GET"
     }).then(function(response){
 
+        // Change text to appropriate response and then append to the OMDB display.
         $("#movie-title").text(response.Title);
         $("#date-released").text(response.Released);
         $("#director").text(response.Director);
@@ -160,7 +166,7 @@ $(document).on("click", ".movie", giphyQuery)
            .on("click", ".movie", queryOMDB)
            .on("click", ".movie", showExtraContent);
 
-// Display animated gif if hovering over still image.
+// Display animated gif and add to favorites badge if hovering over gif.
 $(document).on({
     mouseenter: function() {
         $(this).attr("src", $(this).attr("data-animate"));
@@ -172,24 +178,27 @@ $(document).on({
     }
 }, ".gif-still");
 
-// Add small gif to your favorites.
+// Add small gif (only once) to your list of favorites.
 $(document).on("click", ".figure-badge", function() {
     var $smallStill = $(this).attr("data-still-small");
     var $smallAnimate = $(this).attr("data-animate-small");
 
-    $(this).text("Added!").css("backgroundColor", "goldenrod");
+    // Only add item once.
+    if (!$(this).hasClass("added")){
 
-    $("#your-favorites").show("medium");
+        $(this)
+            .text("Added!")
+            .css("backgroundColor", "goldenrod")
+            .addClass("added");
 
-    $("#your-favorites").append("<img class='m-2' src='" + $(this).attr("data-animate-small") + "'/>");
+        // Display and append to your favorites list.
+        $("#your-favorites").show("medium");
+        $("#your-favorites").append("<img class='m-2' src='" + $(this).attr("data-animate-small") + "'/>");
+
+    }
+   
 });
 
-// $(document).on("click", ".a-download", function(e){
-//     e.preventDefault();
-//     console.log("Yup");
-//     window.location.href = $(this).attr("a-download");
-// });
-
-// Display initial set of gif buttons.
+// Display initial set of gif buttons and hide extra content.
 displayButtons();
 hideExtraContent();
