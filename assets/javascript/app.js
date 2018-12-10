@@ -51,9 +51,12 @@ function giphyQuery() {
 
     var $current = $(this).attr("data-name");
     var baseURL = "https://api.giphy.com/v1/gifs/search";
-    var offset = 0;
+    // Return random set of 10 gifs every time.
+    var offset = Math.floor(Math.random() * 100);
     var URL = baseURL + "?api_key=" + returnKey() + "&q=" + $current + "&limit=10" + "&offset=" + offset;
     var $target = $("#gif-target");
+
+    console.log(offset);
 
     // Return API key (not sure if this is more secure).
     function returnKey() {
@@ -74,7 +77,7 @@ function giphyQuery() {
         for (var i = 0; i < gifs.length; i++) {
 
             // Hide this bit if you want the special effects (.hide()).
-            var $badge = $("<span class='badge badge-pill badge-danger figure-badge p-2'>+ Favorites</span>");
+            var $badge = $("<span class='badge badge-pill badge-danger figure-badge p-2'>+ Favorites</span>").hide();
 
             $badge.attr({
                 "data-still-small": gifs[i].images.fixed_height_small_still.url,
@@ -161,11 +164,11 @@ $(document).on("click", ".movie", giphyQuery)
 $(document).on({
     mouseenter: function() {
         $(this).attr("src", $(this).attr("data-animate"));
-        // $(".figure-badge").first().show("slow");
+        $(this).prev("span").show("slow");
     },
     mouseleave: function() {
         $(this).attr("src", $(this).attr("data-still"));
-        // $(".figure-badge").first().hide("slow");
+        // $(this).prev("span").hide("slow");
     }
 }, ".gif-still");
 
@@ -173,6 +176,8 @@ $(document).on({
 $(document).on("click", ".figure-badge", function() {
     var $smallStill = $(this).attr("data-still-small");
     var $smallAnimate = $(this).attr("data-animate-small");
+
+    $(this).text("Added!");
 
     $("#your-favorites").show("medium");
 
