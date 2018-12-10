@@ -55,7 +55,7 @@ function giphyQuery() {
     var $current = $(this).attr("data-name");
     var baseURL = "https://api.giphy.com/v1/gifs/search";
     // Return random set of 10 gifs every time.
-    var offset = Math.floor(Math.random() * 100);
+    var offset = Math.floor(Math.random() * 50);
     var URL = baseURL + "?api_key=" + returnKey() + "&q=" + $current + "&limit=10" + "&offset=" + offset;
     var $target = $("#gif-target");
 
