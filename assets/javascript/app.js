@@ -1,24 +1,40 @@
-var movies = [
-    "Star Wars",
-    "Mary Poppins",
-    "Frozen",
-    "One Flew Over the Cuckoo's Nest",
-    "The Godfather",
-    "Rocky",
-    "Eternal Sunshine of the Spotless Mind",
-    "12 Angry Men",
-    "Pulp Fiction",
-    "It's a Wonderful Life",
-    "Princess Mononoke",
-    "She's All That",
-    "Dirty Dancing",
-    "Dr. Strangelove",
-    "Django Unchained",
-    "IT",
-    "Sunset Boulevard",
-    "Grease",
-    "The Good, The Bad, and The Ugly"
-];
+var movies = {
+
+    // The list of pre-set movies.
+    list: [
+        "Star Wars",
+        "Mary Poppins",
+        "Frozen",
+        "One Flew Over the Cuckoo's Nest",
+        "The Godfather",
+        "Rocky",
+        "Eternal Sunshine of the Spotless Mind",
+        "12 Angry Men",
+        "Pulp Fiction",
+        "It's a Wonderful Life",
+        "Princess Mononoke",
+        "She's All That",
+        "Dirty Dancing",
+        "Dr. Strangelove",
+        "Django Unchained",
+        "IT",
+        "Sunset Boulevard",
+        "Grease",
+        "The Good, The Bad, and The Ugly"
+    ],
+
+    // Method for getting array of movies.
+    getMovies: function() {
+        return this.list;
+    },
+
+    // Method for setting array of movies.
+    setMovies: function(newMovie) {
+        this.list.push(newMovie);
+    }
+};
+
+console.log(movies.getMovies());
 
 // Function for displaying movie buttons.
 function displayButtons() {
@@ -26,7 +42,8 @@ function displayButtons() {
     var $movieButtonArea = $("#movie-buttons");
     $movieButtonArea.empty();
 
-    $.each(movies, function(i, movie){
+    // ASK ABOUT THIS --> innefficient to call the function every time?
+    $.each(movies.getMovies(), function(i, movie){
         $movieButtonArea.append($("<button type='button' class='btn btn-dark m-1'>" + movie + "</button>").attr("data-name", movie).addClass("movie"));
     });
 
@@ -54,7 +71,7 @@ function giphyQuery() {
 
     var $current = $(this).attr("data-name");
     var baseURL = "https://api.giphy.com/v1/gifs/search";
-    // Return random set of 10 gifs every time.
+    // Return random set of gifs every time.
     var offset = Math.floor(Math.random() * 50);
     var URL = baseURL + "?api_key=" + returnKey() + "&q=" + $current + "&limit=10" + "&offset=" + offset;
     var $target = $("#gif-target");
@@ -152,7 +169,7 @@ $("#submit-movie-button").on("click", function(e) {
     var $value = $("#submit-movie").val().trim();
 
     if ($value) {
-        movies.push($value);
+        movies.setMovies($value);
         displayButtons();
         $("#submit-movie").val("");
     } else {
