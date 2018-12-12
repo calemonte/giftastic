@@ -34,18 +34,27 @@ var movies = {
     }
 };
 
-console.log(movies.getMovies());
-
 // Function for displaying movie buttons.
 function displayButtons() {
 
     var $movieButtonArea = $("#movie-buttons");
     $movieButtonArea.empty();
 
-    // ASK ABOUT THIS --> innefficient to call the function every time?
+    // Call array of movies and render initial set of buttons.
     $.each(movies.getMovies(), function(i, movie){
         $movieButtonArea.append($("<button type='button' class='btn btn-dark m-1'>" + movie + "</button>").attr("data-name", movie).addClass("movie"));
     });
+
+};
+
+// Function for displaying an extra button.
+function displayExtraButton() {
+
+    var $movieButtonArea = $("#movie-buttons");
+    var currentList = movies.getMovies();
+    var currentMovie = currentList[currentList.length - 1]; 
+
+    $movieButtonArea.append($("<button type='button' class='btn btn-dark m-1'>" + currentMovie + "</button>").attr("data-name", currentMovie).addClass("movie"));
 
 };
 
@@ -72,11 +81,9 @@ function giphyQuery() {
     var $current = $(this).attr("data-name");
     var baseURL = "https://api.giphy.com/v1/gifs/search";
     // Return random set of gifs every time.
-    var offset = Math.floor(Math.random() * 50);
+    var offset = Math.floor(Math.random() * 30);
     var URL = baseURL + "?api_key=" + returnKey() + "&q=" + $current + "&limit=10" + "&offset=" + offset;
     var $target = $("#gif-target");
-
-    console.log(offset);
 
     // Return API key (not sure if this is more secure).
     function returnKey() {
@@ -170,7 +177,7 @@ $("#submit-movie-button").on("click", function(e) {
 
     if ($value) {
         movies.setMovies($value);
-        displayButtons();
+        displayExtraButton();
         $("#submit-movie").val("");
     } else {
         alert("You forgot to add a movie!");
@@ -178,7 +185,7 @@ $("#submit-movie-button").on("click", function(e) {
 
 });
 
-// When a movie button is clicked, query GIPHY and OMDB database and  display corresponding set of gifs and movie specs.
+// When a movie button is clicked, query GIPHY and OMDB database and display corresponding set of gifs and movie specs.
 $(document).on("click", ".movie", giphyQuery)
            .on("click", ".movie", queryOMDB)
            .on("click", ".movie", showExtraContent);
