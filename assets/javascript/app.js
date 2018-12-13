@@ -42,7 +42,11 @@ function displayButtons() {
 
     // Call array of movies and render initial set of buttons.
     $.each(movies.getMovies(), function(i, movie){
-        $movieButtonArea.append($("<button type='button' class='btn btn-dark m-1'>" + movie + "</button>").attr("data-name", movie).addClass("movie"));
+        $movieButtonArea.append(
+            $("<button type='button' class='btn btn-dark m-1'>"
+            + movie + "</button>")
+                .attr("data-name", movie)
+                .addClass("movie"));
     });
 
 };
@@ -54,7 +58,11 @@ function displayExtraButton() {
     var currentList = movies.getMovies();
     var currentMovie = currentList[currentList.length - 1]; 
 
-    $movieButtonArea.append($("<button type='button' class='btn btn-dark m-1'>" + currentMovie + "</button>").attr("data-name", currentMovie).addClass("movie"));
+    $movieButtonArea.append(
+        $("<button type='button' class='btn btn-dark m-1'>"
+        + currentMovie + "</button>")
+            .attr("data-name", currentMovie)
+            .addClass("movie"));
 
 };
 
@@ -121,7 +129,9 @@ function giphyQuery() {
             $img.addClass("gif-still");
 
             // Create caption with GIPHY rating and link to the original on GIPHY.com.
-            var $figCaption = $("<figcaption class='figure-caption text-center'> Rating: " + gifs[i].rating + "  |  " + "<a target='_blank' href='" + gifs[i].bitly_gif_url + "' download> View on GIPHY </a>" + "</figcaption>");
+            var $figCaption = $("<figcaption class='figure-caption text-center'> Rating: "
+                + gifs[i].rating + "  |  " + "<a target='_blank' href='" + gifs[i].bitly_gif_url 
+                + "' download> View on GIPHY </a>" + "</figcaption>");
 
             // Create figure and then append gif, badge, and caption to it.
             var $gif = $("<figure class='figure m-3' />");
@@ -145,7 +155,7 @@ function queryOMDB() {
     // Cache reference to OMDB display area.
     var $target = $("#omdb-display");
 
-    // Return API key (not sure if this is more secure).
+    // Return API key.
     function returnKey() {
         var key = "trilogy";
         return key;
@@ -157,12 +167,22 @@ function queryOMDB() {
         method: "GET"
     }).then(function(response){
 
-        // Change text to appropriate response and then append to the OMDB display.
-        $("#movie-title").text(response.Title);
-        $("#date-released").text(response.Released);
-        $("#director").text(response.Director);
-        $("#synopsis").text(response.Plot);
-        $("#omdb-display").append("<img src='" + response.Poster + "'/img>");
+        // Tell the user if a movie couldn't be found in OMDB.
+        if (response.Response === "False") {
+            $("#movie-title").text("No movies found. Try again!");
+            $("#date-released").text("");
+            $("#director").text("");
+            $("#synopsis").text("");
+            $("#omdb-display > img").remove();
+
+        // Else display appropriate response and then append to the OMDB display.
+        } else {
+            $("#movie-title").text(response.Title);
+            $("#date-released").html("<b>Date Released</b>: " + response.Released);
+            $("#director").html("<b>Director</b>:" + response.Director);
+            $("#synopsis").html("<b>Synopsis</b>:" + response.Plot);
+            $("#omdb-display").append("<img src='" + response.Poster + "'/img>");
+        }    
 
     });
 
