@@ -93,7 +93,7 @@ function giphyQuery() {
     var URL = baseURL + "?api_key=" + returnKey() + "&q=" + $current + "&limit=10" + "&offset=" + offset;
     var $target = $("#gif-target");
 
-    // Return API key (not sure if this is more secure).
+    // Return API key.
     function returnKey() {
         var key = "qRIyCfMnPI78aoVU1AARjAHhoOBkyKJs";
         return key;
@@ -179,8 +179,8 @@ function queryOMDB() {
         } else {
             $("#movie-title").text(response.Title);
             $("#date-released").html("<b>Date Released</b>: " + response.Released);
-            $("#director").html("<b>Director</b>:" + response.Director);
-            $("#synopsis").html("<b>Synopsis</b>:" + response.Plot);
+            $("#director").html("<b>Director</b>: " + response.Director);
+            $("#synopsis").html("<b>Synopsis</b>: " + response.Plot);
             $("#omdb-display").append("<img src='" + response.Poster + "'/img>");
         }    
 
