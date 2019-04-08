@@ -1,3 +1,5 @@
+![The Gif-o-Matic logo.](./assets/images/gifomatic.png  "The Gif-o-Matic logo")
+
 # Movie Gif-o-Matic
 A dynamic web app that populates the page with gifs pulled from the GIPHY API and movie information pulled from the OMDB API. 
 
